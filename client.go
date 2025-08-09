@@ -18,12 +18,12 @@ type GoZaya struct {
 	Config      struct {
 		CreateLinkEndpoint string
 		GetLinkEndpoint    string
+		RemoveLinkEndpoint string
 	}
 }
 
 const (
-	adminClientID string = "admin-cli"
-	urlSeparator  string = "/"
+	urlSeparator string = "/"
 )
 
 func makeURL(path ...string) string {
@@ -91,6 +91,7 @@ func NewClient(basePath string, options ...func(*GoZaya)) *GoZaya {
 
 	c.Config.CreateLinkEndpoint = makeURL("api", "v1", "links")
 	c.Config.GetLinkEndpoint = makeURL("api", "v1", "links")
+	c.Config.RemoveLinkEndpoint = makeURL("api", "v1", "links")
 
 	for _, option := range options {
 		option(&c)
@@ -208,6 +209,19 @@ func (g *GoZaya) GetLink(ctx context.Context, token string, id string) (*Respons
 		Get(g.basePath + "/" + g.Config.GetLinkEndpoint + "/" + id)
 
 	if err := checkForError(resp, err, "failed to get link"); err != nil {
+		return nil, err
+	}
+
+	return &result, nil
+}
+
+func (g *GoZaya) RemoveLink(ctx context.Context, token string, id string) (*RemoveLinkResponse, error) {
+	var result RemoveLinkResponse
+
+	resp, err := g.GetRequestWithBearerAuthNoCache(ctx, token).
+		Delete(g.basePath + "/" + g.Config.RemoveLinkEndpoint + "/" + id)
+
+	if err := checkForError(resp, err, "failed to remove link"); err != nil {
 		return nil, err
 	}
 

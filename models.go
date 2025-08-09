@@ -169,3 +169,10 @@ type Data struct {
 	CreatedAt        time.Time   `json:"created_at"`
 	UpdatedAt        time.Time   `json:"updated_at"`
 }
+
+type RemoveLinkResponse struct {
+	ID      int64  `json:"id"`
+	Object  string `json:"object"`
+	Deleted bool   `json:"deleted"`
+	Status  int64  `json:"status"`
+}

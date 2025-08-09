@@ -1,4 +1,4 @@
-module github.com/erfandiakoo/gozaya
+module github.com/erfandiakoo/go-zaya
 
 go 1.24.5
 

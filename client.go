@@ -2,6 +2,7 @@ package gozaya
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -197,6 +198,10 @@ func (g *GoZaya) CreateLink(ctx context.Context, token string, link *GenerateLin
 
 	if err := checkForError(resp, err, "failed to create link"); err != nil {
 		return nil, err
+	}
+
+	if err := json.Unmarshal(resp.Body(), &result); err != nil {
+		return nil, fmt.Errorf("failed to parse create link response: %w", err)
 	}
 
 	return &result, nil

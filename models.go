@@ -130,6 +130,7 @@ type GenerateLinkRequest struct {
 	Url              string `json:"url"`
 	Alias            string `json:"alias,omitempty"`
 	Password         string `json:"password,omitempty"`
+	Space            int    `json:"space,omitempty"`
 	Disable          int    `json:"disable,omitempty"`
 	Public           int    `json:"public,omitempty"`
 	Description      string `json:"description,omitempty"`
